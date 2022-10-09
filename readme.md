@@ -1,0 +1,1 @@
+This is a demo MERN project for learning purpose
