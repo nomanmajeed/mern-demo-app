@@ -8,11 +8,16 @@ exports.index = async (req, res) => {
   }
 
 exports.create = async (req, res) => {
-
-    Employee.create(req.body);
-    res.json({
-      data: `Employee is Stored with Name ${req.body.name} and name ${req.body.designation}`,
-    });
+    try {
+      
+      await Employee.create(req.body);
+      res.status(201).json({
+        data: `Employee is Stored with Name ${req.body.name} and name ${req.body.designation}`,
+      });
+      
+    } catch (error) {
+      res.json(error.errors)
+    }
   }
 
 exports.show = async (req, res) => {
