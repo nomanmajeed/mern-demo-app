@@ -1,4 +1,5 @@
-const User = require('./../models/user')
+const User = require('../models/user')
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -25,5 +26,7 @@ exports.login = async (req, res) => {
         )
         return;
     }
-    res.json(user)
+
+    const access_token = await jwt.sign({user}, 'fake-env-jwt-key');
+    res.json({user, access_token})
   }
