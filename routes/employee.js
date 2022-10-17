@@ -1,18 +1,16 @@
 const express = require("express");
 const employeeRouter = express.Router();
-const bookController = require('./../conrollers/bookController');
-const connect = require('./../database/db')
-const { ObjectId } = require("mongodb");
+const employeeController = require('../conrollers/employeeController');
 
 employeeRouter
   .route("/")
-  .get(bookController.index)
-  .post(bookController.create);
+  .get(employeeController.index)
+  .post(employeeController.create);
 
 employeeRouter
   .route("/:id")
-  .get(bookController.show)
-  .patch(bookController.update)
-  .delete(bookController.delete);
+  .get(employeeController.show)
+  .patch(employeeController.update)
+  .delete(employeeController.delete);
 
 module.exports = employeeRouter;

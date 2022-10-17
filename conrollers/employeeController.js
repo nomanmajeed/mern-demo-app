@@ -1,16 +1,15 @@
-const connect = require('./../database/db')
+const connect = require('../database/db')
+const Employee = require('./../models/employee')
 const { ObjectId } = require("mongodb");
 
 exports.index = async (req, res) => {
-    const db = await connect();
-    const employees = await db.collection("employee").find().toArray();
+    const employees = await Employee.find();
     res.json(employees);
   }
 
 exports.create = async (req, res) => {
-    const db = await connect();
 
-    db.collection('employee').insertOne(req.body);
+    Employee.create(req.body);
     res.json({
       data: `Employee is Stored with Name ${req.body.name} and name ${req.body.designation}`,
     });
@@ -18,21 +17,18 @@ exports.create = async (req, res) => {
 
 exports.show = async (req, res) => {
     const _id = ObjectId(req.params.id)
-    const db = await connect()
-    const employee = await db.collection('employee').find({_id}).toArray();
+    const employee = await Employee.find({_id});
     res.json(employee);
   }
 
 exports.update = async (req, res) => {
     const _id = ObjectId(req.params.id)
-    const db = await connect()
-    await db.collection('employee').updateOne({ _id }, { $set : req.body})
+    await Employee.updateOne({ _id }, { $set : req.body})
     res.json({data : `Employee with ID: ${req.params.id} is updated`});
   }
 
 exports.delete = async (req, res) => {
     const _id = ObjectId(req.params.id)
-    const db = await connect()
-    await db.collection('employee').deleteOne({ _id })
+    await Employee.deleteOne({ _id })
     res.status(204).json();
   }
